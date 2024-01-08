@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using ViewModel;
 
-HubConnection connection = new HubConnectionBuilder()
-    .WithUrl("http://localhost:5118/ChatBotHub")
+HubConnection hubConnection = new HubConnectionBuilder()
+    .WithUrl("http://localhost:5118/ChatbotHub")
     .Build();
 
-await connection.StartAsync();
+await hubConnection.StartAsync();
 
-List<string> messages = [];
+List<MessagePayloadViewModel> messages = [];
 
-connection.On<string>("ReceiveMessage", (message) =>
+hubConnection.On<MessagePayloadViewModel>("ReceiveMessage", message =>
 {
     messages.Add(message);
     messages.ForEach(Console.WriteLine);
 });
 
 Console.WriteLine("Enter your name:");
-string? name = await Console.In.ReadLineAsync();
+string? senderId = await Console.In.ReadLineAsync();
 
 Console.Clear();
 
@@ -23,7 +24,7 @@ while (true)
 {
     Console.WriteLine("Enter message:");
     string? message = await Console.In.ReadLineAsync();
-    messages.Add($"{name}: {message}");
+    messages.Add(new(senderId, message));
 
     if (message == "exit") break;
     
@@ -31,8 +32,7 @@ while (true)
 
     try
     {
-        await connection.InvokeAsync("SendMessage", 
-            name, message);
+        await hubConnection.InvokeAsync("SendMessage", message);
     }
     catch (Exception ex)
     {

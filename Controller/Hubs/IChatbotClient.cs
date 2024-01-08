@@ -1,8 +1,10 @@
-﻿using ViewModel;
+﻿using SignalRSwaggerGen.Attributes;
+using ViewModel;
 
 namespace Controller.Hubs;
 
-public interface IChatBotClient
+[SignalRHub]
+public interface IChatbotClient
 {
     Task ReceiveMessage(MessagePayloadViewModel messagePayloadViewModel);
 }

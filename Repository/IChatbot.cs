@@ -4,5 +4,5 @@ namespace Repository;
 
 public interface IChatbot
 {
-    Task<MessagePayloadModel> GetResponse(string message);
+    Task<MessagePayloadModel> GetByMessage(string message);
 }

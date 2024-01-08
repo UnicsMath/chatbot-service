@@ -5,7 +5,7 @@ namespace Repository;
 
 public class RoboMaticAI : IChatbot
 {
-    public async Task<MessagePayloadModel> GetResponse(string message)
+    public async Task<MessagePayloadModel> GetByMessage(string message)
     {
         HttpClient client = new();
         HttpRequestMessage request = new()

@@ -7,6 +7,6 @@ public class ChatbotService
 {
     private IChatbot _chatBot = new RoboMaticAI();
 
-    public MessagePayloadViewModel GetFromMessage(string message) => 
-        MessagePayloadMapper.ToViewModel(_chatBot.GetResponse(message).Result);
+    public MessagePayloadViewModel GetByMessage(string message) => 
+        MessagePayloadMapper.ToViewModel(_chatBot.GetByMessage(message).Result);
 }

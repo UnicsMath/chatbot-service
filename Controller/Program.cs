@@ -14,7 +14,11 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new() { Title = "Chatbot Service API v1", Version = "v1" });
+    options.AddSignalRSwaggerGen();
+});
 builder.Services.AddSignalR();
 
 WebApplication app = builder.Build();
@@ -28,6 +32,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapHub<ChatBotHub>("/chatBotHub");
+app.MapHub<ChatbotHub>("/chatBotHub");
 
 app.Run();
